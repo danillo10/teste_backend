@@ -36,7 +36,8 @@ class RealEstateBranchController extends Controller
     public function show($id)
     {
         try {
-            return Utils::buildReturnSuccessStatement(RealEstateBranch::find($id));
+            $realEstateBranch = RealEstateBranch::leftJoin('address_view','address_view.state_id','real_estate_branches.state_id')->where('real_estate_branches.id',$id)->select('real_estate_branches.*','address_view.*')->first();
+            return Utils::buildReturnSuccessStatement($realEstateBranch);
         } catch (\Exception $e) {
             return Utils::buildReturnErrorStatement($e->getMessage());
         }
@@ -47,7 +48,7 @@ class RealEstateBranchController extends Controller
         try {
             $request->validate([
                 'social_reason' => 'required|unique:real_estate_branches,social_reason|max:191',
-                'real_estate_agencies_id' => 'required',
+                // 'real_estate_agencies_id' => 'required',
                 'cnpj' => 'required|unique:real_estate_agencies,cnpj|unique:real_estate_branches,cnpj|digits:14',
                 'email' => 'required|email:rfc,dns|unique:real_estate_branches,email',
                 'contact_name' => 'required|max:191',
@@ -64,7 +65,8 @@ class RealEstateBranchController extends Controller
             ]);
             
             $adress = AddressController::getAddress($request);
-            $realEstateBranch = RealEstateBranch::create(array_merge($request->all(), $adress->toArray(), ['is_agency' => false]));
+
+            $realEstateBranch = RealEstateBranch::create(array_merge($request->all(), $adress->toArray(), ['is_agency' => false],['real_estate_agencies_id' => 1]));
 
             $fileErro = [];
 
@@ -87,7 +89,8 @@ class RealEstateBranchController extends Controller
     {
         try {
             $request->validate([
-                'social_reason' => 'required|unique:real_estate_branches,social_reason|max:191',
+                // 'social_reason' => 'required|unique:real_estate_branches,social_reason|max:191',
+                'social_reason' => 'required|max:191',
                 'cnpj' => 'required|unique:real_estate_agencies,cnpj|digits:14',
                 'email' => 'required|email:rfc,dns',
                 'contact_name' => 'required|max:191',

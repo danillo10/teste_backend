@@ -17,4 +17,11 @@ class LoginController extends Controller
         
         return response()->json(['token' => $token]);
     }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
 }

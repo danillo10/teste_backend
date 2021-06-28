@@ -46,19 +46,19 @@ class ClientController extends Controller
     {
         try {
             $request->validate([
-                // 'name_social_reason' => 'required|max:191',
-                // 'cpf_cnpj' => 'required|unique:clients,cpf_cnpj',
-                // 'person' => 'required',
-                // 'email' => 'required|email:rfc,dns|unique:clients,email',
-                // //'income_revenues' => 'required',
-                // 'contact_phone' => 'required|numeric',
-                // 'contact_cell' => 'numeric',
-                // 'zip_code' => 'required|numeric|digits:8',
-                // 'address' => 'required',
-                // 'address_number' => 'required|numeric',
-                // 'neighborhood' => 'required',
-                // 'city' => 'required',
-                // 'state' => 'required'
+                'name_social_reason' => 'required|max:191',
+                'cpf_cnpj' => 'required|unique:clients,cpf_cnpj',
+                'person' => 'required',
+                'email' => 'required|email:rfc,dns|unique:clients,email',
+                //'income_revenues' => 'required',
+                'contact_phone' => 'required|numeric',
+                'contact_cell' => 'numeric',
+                'zip_code' => 'required|numeric|digits:8',
+                'address' => 'required',
+                'address_number' => 'required|numeric',
+                'neighborhood' => 'required',
+                'city' => 'required',
+                'state' => 'required'
             ]);
 
             $adress = AddressController::getAddress($request);

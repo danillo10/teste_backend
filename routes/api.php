@@ -38,7 +38,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function() {
     Route::resource('realestateagency', RealEstateAgencyController::class);
     Route::resource('realestatebranch', RealEstateBranchController::class);
-    Route::post('realestatebranch/{id}', [RealEstateBranchController::class, 'update']);
+    Route::put('realestatebranch/{id}', [RealEstateBranchController::class, 'update']);
     Route::resource('customercapture', CustomerCaptureController::class);
     Route::resource('client', ClientController::class);
     Route::resource('clientbank', ClientBankAccountController::class);
@@ -49,15 +49,22 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('partner/{id}', [PartnerController::class, 'update']);
     Route::resource('user', UserController::class);
     Route::resource('realty', RealtyController::class);
-    Route::post('realty/{id}', [RealtyController::class, 'update']);
+    Route::put('realty/{id}', [RealtyController::class, 'update']);
     Route::resource('realtystatus', RealtyStatusController::class);
     Route::resource('realtytype', RealtyTypeController::class);
     Route::resource('scheduling', SchedulingController::class);
     Route::resource('administrativetask', AdministrativeTaskController::class);
     Route::post('administrativetask/{id}', [AdministrativeTaskController::class, 'update']);
     Route::post('address', [AddressController::class, 'getAddress']);
+
+    Route::resource('imobiliaria', Api/ImobiliariaController::class);
+    Route::resource('imovel', Api/ImovelController::class);
+    Route::resource('fornecedor', Api/FornecedorController::class);
+    Route::resource('parceiro', Api/ParceiroController::class);
+    Route::resource('cliente', Api/ClienteController::class);
 });
 
 Route::post('login', [LoginController::class,'login']);
+Route::post('logout', [LoginController::class,'logout']);
 Route::post('/user', [UserController::class, 'store']);
 Route::get('/index', [UserController::class, 'index']);
