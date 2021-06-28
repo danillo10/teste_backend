@@ -19,6 +19,11 @@ use App\Http\Controllers\SchedulingController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RealtyStatusController;
 use App\Http\Controllers\RealtyTypeController;
+use App\Http\Controllers\Api\ClienteController;
+use App\Http\Controllers\Api\ImobiliariaController;
+use App\Http\Controllers\Api\ImovelController;
+use App\Http\Controllers\Api\FornecedorController;
+use App\Http\Controllers\Api\ParceiroController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,11 +62,11 @@ Route::group(['prefix' => 'v1'], function() {
     Route::post('administrativetask/{id}', [AdministrativeTaskController::class, 'update']);
     Route::post('address', [AddressController::class, 'getAddress']);
 
-    Route::resource('imobiliaria', Api/ImobiliariaController::class);
-    Route::resource('imovel', Api/ImovelController::class);
-    Route::resource('fornecedor', Api/FornecedorController::class);
-    Route::resource('parceiro', Api/ParceiroController::class);
-    Route::resource('cliente', Api/ClienteController::class);
+    Route::resource('imobiliaria', ImobiliariaController::class);
+    Route::resource('imovel', ImovelController::class);
+    Route::resource('fornecedor', FornecedorController::class);
+    Route::resource('parceiro', ParceiroController::class);
+    Route::resource('cliente', ClienteController::class);
 });
 
 Route::post('login', [LoginController::class,'login']);
