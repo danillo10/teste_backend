@@ -123,9 +123,9 @@ class ImobiliariaController extends Controller
     {
         try {
             $request->validate([
-                'razao_social' => 'required|unique:imobiliarias,razao_social',
-                'cnpj' => 'required|unique:imobiliarias,cnpj|digits:14',
-                'email' => 'required|email:rfc,dns|unique:imobiliarias,email',
+                'razao_social' => 'required|',
+                'cnpj' => 'required|digits:14,',
+                'email' => 'required|email:rfc,dns',
                 'responsavel' => 'required',
                 'telefone_contato' => 'required',
                 'celular_contato' => 'required',
