@@ -32,6 +32,11 @@ class CreateImobiliariasTable extends Migration
             $table->string('bairro');
             $table->string('estado',2);
             $table->string('cidade');
+            $table->string('cpfcnpj_banco')->nullable();
+            $table->integer('banco_id')->nullable();
+            $table->integer('tipo_conta')->nullable();
+            $table->string('agencia',4)->nullable();
+            $table->string('conta',10)->nullable();
             $table->timestamps();
         });
     }

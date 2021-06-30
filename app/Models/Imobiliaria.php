@@ -12,8 +12,8 @@ class Imobiliaria extends Model
     protected $fillable = 
     [
         'razao_social',
-        'numero_cresci',
-        'arquivo_cresci',
+        'numero_creci',
+        'arquivo_creci',
         'cnpj',
         'email',
         'is_agency',
@@ -27,6 +27,11 @@ class Imobiliaria extends Model
         'ponto_referencia',
         'bairro',
         'estado',
-        'cidade'
+        'cidade',
+        'cpfcnpj_banco',
+        'banco_id',
+        'tipo_conta',
+        'agencia',
+        'conta'
     ];
 }
