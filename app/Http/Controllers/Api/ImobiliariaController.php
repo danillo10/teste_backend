@@ -56,15 +56,14 @@ class ImobiliariaController extends Controller
         try {
             $request->validate([
                 'razao_social' => 'required|unique:imobiliarias,razao_social|max:191',
-                'cnpj' => 'required|unique:imobiliarias,cpf_cnpj|digits:14',
+                'cnpj' => 'required|unique:imobiliarias,cnpj|digits:14',
                 'email' => 'required|email:rfc,dns|unique:imobiliarias,email',
                 'responsavel' => 'required|max:191',
-                'creci_data' => 'file',
-                'telefone_contato' => 'required|numeric',
-                'celular_contato' => 'numeric',
-                'cep' => 'required|numeric|digits:8',
+                'telefone_contato' => 'required',
+                'celular_contato' => 'required',
+                'cep' => 'required|min:8',
                 'logradouro' => 'required',
-                'numero' => 'required|numeric',
+                'numero' => 'required',
                 'bairro' => 'required',
                 'cidade' => 'required',
                 'estado' => 'required'
@@ -74,8 +73,8 @@ class ImobiliariaController extends Controller
 
             $fileErro = [];
 
-            if ($request->hasFile('creci_data'))
-                $fileErro = array_merge($fileErro, Utils::UploadFilesToS3($imobiliaria, $request->creci_data, RouterS3::REALESTATE_CRECI));
+            // if ($request->hasFile('arquivo_creci'))
+            //     $fileErro = array_merge($fileErro, Utils::UploadFilesToS3($imobiliaria, $request->arquivo_creci, RouterS3::REALESTATE_CRECI));
                 
             return Utils::buildReturnSuccessStatementUpload($imobiliaria, $fileErro);
         } catch (ValidationException $e) {
@@ -124,29 +123,28 @@ class ImobiliariaController extends Controller
     {
         try {
             $request->validate([
-                'razao_social' => 'required|unique:imobiliarias,razao_social|max:191',
-                'cnpj' => 'required|unique:imobiliarias,cpf_cnpj|digits:14',
+                'razao_social' => 'required|unique:imobiliarias,razao_social',
+                'cnpj' => 'required|unique:imobiliarias,cnpj|digits:14',
                 'email' => 'required|email:rfc,dns|unique:imobiliarias,email',
-                'responsavel' => 'required|max:191',
-                'arquivo_creci' => 'file',
-                'telefone_contato' => 'required|numeric',
-                'celular_contato' => 'numeric',
-                'cep' => 'required|numeric|digits:8',
+                'responsavel' => 'required',
+                'telefone_contato' => 'required',
+                'celular_contato' => 'required',
+                'cep' => 'required|min:8',
                 'logradouro' => 'required',
-                'numero' => 'required|numeric',
+                'numero' => 'required',
                 'bairro' => 'required',
                 'cidade' => 'required',
                 'estado' => 'required'
             ]);
             $imobiliaria = Imobiliaria::find($id);
-            $imobiliaria->update($request->except(['creci_data']));
+            $imobiliaria->update($request->except(['arquivo_creci']));
 
             $fileErro = [];
 
-            if ($request->hasFile('creci_data')) {
-                $fileErro = array_merge($fileErro, Utils::destroyFilesToS3($imobiliaria, $realEstateBranch->creci_data, RouterS3::PARTNER_CRECI));
-                $fileErro = array_merge($fileErro, Utils::uploadFilesToS3($imobiliaria, $request->realty_media, RouterS3::PARTNER_CRECI));
-            };
+            // if ($request->hasFile('creci_data')) {
+            //     $fileErro = array_merge($fileErro, Utils::destroyFilesToS3($imobiliaria, $realEstateBranch->creci_data, RouterS3::PARTNER_CRECI));
+            //     $fileErro = array_merge($fileErro, Utils::uploadFilesToS3($imobiliaria, $request->realty_media, RouterS3::PARTNER_CRECI));
+            // };
 
             return Utils::buildReturnSuccessStatementUpload($imobiliaria, $fileErro);
         } catch (ValidationException $e) {
