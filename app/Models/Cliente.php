@@ -9,27 +9,15 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = 
-    [  
-        'status',
-        'pessoa',
-        'nome_fantasia',
-        'razao_social',
-        'cpf_cnpj',
+    protected $fillable =
+    [
+        'nome',
         'email',
-        'faturamento',
-        'origem',
-        'nome_contato',
-        'telefone_contato',
-        'celular_contato',
-        'registro_creci',
-        'cep',
-        'logradouro',
-        'numero',
-        'complemento',
-        'ponto_referencia',
-        'bairo',
+        'telefone',
         'estado',
-        'cidade'
+        'cidade',
+        'data_nascimento',
+        'plano_id'
     ];
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\Plano;
 use Illuminate\Validation\ValidationException;
 use App\Models\TypeUser;
 use App\Http\Controllers\Auth\Helpers\Util;
@@ -38,16 +39,6 @@ class ClienteController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -57,19 +48,12 @@ class ClienteController extends Controller
     {
         try {
             $request->validate([
-                'nome_fantasia' => 'required|max:191',
-                'cpfcnpj' => 'required|unique:clientes,cpfcnpj',
-                'pessoa' => 'required',
-                'email' => 'required|email:rfc,dns|unique:clientes,email',
-                'nome_contato' => 'required',
-                'telefone_contato' => 'required|numeric',
-                'celular_contato' => 'numeric',
-                'cep' => 'required|numeric|digits:8',
-                'logradouro' => 'required',
-                'numero' => 'required|numeric',
-                'bairro' => 'required',
+                'nome' => 'required|max:191',
+                'email' => 'required|unique:clientes',
+                'telefone' => 'required',
+                'estado' => 'required',
                 'cidade' => 'required',
-                'estado' => 'required'
+                'data_nascimento' => 'required'
             ]);
 
             $cliente = Cliente::create($request->all());
@@ -98,17 +82,6 @@ class ClienteController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,12 +92,12 @@ class ClienteController extends Controller
     {
         try {
             $request->validate([
-                'nome_fantasia' => 'max:191',
-                'email' => 'email:rfc,dns',
-                'nome_contato' => 'required',
-                'telefone_contato' => 'numeric',
-                'celular_contato' => 'numeric',
-                'cep' => 'numeric|digits:8',
+                'nome' => 'required|max:191',
+                'email' => 'required',
+                'telefone' => 'required',
+                'estado' => 'required',
+                'cidade' => 'required',
+                'data_nascimento' => 'required'
             ]);
 
             $client = Cliente::find($id);
@@ -147,6 +120,13 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         try {
+            $cliente = Cliente::find($id);
+            $plano = Plano::getPlanoNome($cliente->plano_id);
+
+            if($cliente->estado == 'SP' && $plano == 'Free'){
+                return Utils::buildReturnCustomerSpFree();
+            }
+
             return Utils::buildReturnSuccessStatement(Cliente::destroy($id));
         } catch (\Exception $e) {
             return Utils::buildReturnErrorStatement($e->getMessage());

@@ -1,4 +1,4 @@
-# IMOVESYS
+# TESTE
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 $ composer install 
 ```
-2 - Create [.env](https://github.com/laravel/laravel/blob/master/.env.example) file and change **DB_DATABASE** variable to **imovesys**
+2 - Create [.env](https://github.com/laravel/laravel/blob/master/.env.example) file and change **DB_DATABASE** variable to **teste**
 ```
 DB_DATABASE=imovesys
 ```
